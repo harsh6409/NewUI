@@ -6,30 +6,14 @@ import AppDataContext from '../Components/Context';
 import { Currency } from './Items';
 
 
-export default function MyList() {
+export default function MyList(props) {
     const [myData, setData] = useState(DATA);
     const [myValue, setNewValue] = useState(0);
 
     const [_, setPrice] = useContext(AppDataContext);
 
-    // const Item = ({ title }) => (
-    //     <TouchableNativeFeedback onPress={() => onclick(title.index)}>
-    //         <View style={styles.listStyle}>
-    //             <Text style={styles.textStyle2}>{title.item.title}</Text>
-    //             <Text style={styles.textStyle2}>$ {title.item.price}</Text>
-    //             <Text style={[styles.textStyle2, { color: 'red' }]}> - {title.item.changeRate}%</Text>
-    //             <Text style={styles.textStyle2}>$ {title.item.cap}</Text>
-    //         </View>
-    //     </TouchableNativeFeedback >
-    // );
+    console.log(props.searchkey);
 
-    // function updateValues(item) {
-    //     setPrice(DATA[item].price)
-    //     var value1 = Math.round(Math.random() * 100000);
-    //     DATA[item].cap = value1;
-    //     setData(DATA);
-    //     setNewValue(value1);
-    // }
 
     const onclick = useCallback((item) => {
         setPrice(DATA[item].price)
@@ -43,7 +27,6 @@ export default function MyList() {
     );
 
     const ListHeader = () => {
-        console.log("render header")
         return (
             <View style={styles.headerStyle}>
                 <Text style={styles.textStyle}>Market</Text>
@@ -57,10 +40,9 @@ export default function MyList() {
     return (
         <View style={styles.container}>
             <FlatList
-                data={myData}
+                data={myData.filter((item) => { return item.title.toLowerCase().includes(props.searchkey.toLowerCase()) })}
                 ItemSeparatorComponent={ItemSeprator}
                 ListHeaderComponent={ListHeader}
-                // renderItem={(item) => <Item title={item} />}
                 renderItem={(item) => <Currency index={item.index} title={item.item.title} price={item.item.price} cap={item.item.cap} changeRate={item.item.changeRate} onclick={onclick} />}
                 keyExtractor={item => item.id}
                 extraData={myData}

@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 
 export default function CustomButton(props) {
     return (
-        <TouchableOpacity style={[styles.container, props.backColor]} >
+        <TouchableOpacity style={[styles.container, props.backColor]} onPress={props.onclick}>
             <View>
                 <Image source={props.imageName} style={[styles.imageView, props.imgColor]}></Image>
             </View>
