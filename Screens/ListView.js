@@ -1,41 +1,49 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { memo, useCallback, useContext, useState } from 'react';
 import { View, Text, SafeAreaView, StyleSheet, Dimensions, FlatList, TouchableNativeFeedback } from 'react-native';
 import DATA from './ListData';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import AppDataContext from '../Components/Context';
+import { Currency } from './Items';
 
 
 export default function MyList() {
     const [myData, setData] = useState(DATA);
+    const [myValue, setNewValue] = useState(0);
 
     const [_, setPrice] = useContext(AppDataContext);
 
-    const Item = ({ title }) => (
-        <TouchableNativeFeedback onPress={() => onclick(title.index)}>
-            <View style={styles.listStyle}>
-                <Text style={styles.textStyle2}>{title.item.title}</Text>
-                <Text style={styles.textStyle2}>$ {title.item.price}</Text>
-                <Text style={[styles.textStyle2, { color: 'red' }]}> - {title.item.changeRate}%</Text>
-                <Text style={styles.textStyle2}>$ {title.item.cap}</Text>
-            </View>
-        </TouchableNativeFeedback >
-    );
+    // const Item = ({ title }) => (
+    //     <TouchableNativeFeedback onPress={() => onclick(title.index)}>
+    //         <View style={styles.listStyle}>
+    //             <Text style={styles.textStyle2}>{title.item.title}</Text>
+    //             <Text style={styles.textStyle2}>$ {title.item.price}</Text>
+    //             <Text style={[styles.textStyle2, { color: 'red' }]}> - {title.item.changeRate}%</Text>
+    //             <Text style={styles.textStyle2}>$ {title.item.cap}</Text>
+    //         </View>
+    //     </TouchableNativeFeedback >
+    // );
 
-    function updateValues(item) {
+    // function updateValues(item) {
+    //     setPrice(DATA[item].price)
+    //     var value1 = Math.round(Math.random() * 100000);
+    //     DATA[item].cap = value1;
+    //     setData(DATA);
+    //     setNewValue(value1);
+    // }
+
+    const onclick = useCallback((item) => {
         setPrice(DATA[item].price)
-        DATA[item].cap = Math.round(Math.random() * 100000);
-        setData(DATA);
-    }
-
-    const onclick = (item) => (
-        updateValues(item)
-    );
+        var value1 = Math.round(Math.random() * 100000);
+        myData[item].cap = value1;
+        setNewValue(value1);
+    }, [myData]);
 
     const ItemSeprator = () => (
         <View style={styles.itemSap}></View>
     );
 
     const ListHeader = () => {
+        console.log("render header")
         return (
             <View style={styles.headerStyle}>
                 <Text style={styles.textStyle}>Market</Text>
@@ -52,8 +60,10 @@ export default function MyList() {
                 data={myData}
                 ItemSeparatorComponent={ItemSeprator}
                 ListHeaderComponent={ListHeader}
-                renderItem={(item) => <Item title={item} />}
+                // renderItem={(item) => <Item title={item} />}
+                renderItem={(item) => <Currency index={item.index} title={item.item.title} price={item.item.price} cap={item.item.cap} changeRate={item.item.changeRate} onclick={onclick} />}
                 keyExtractor={item => item.id}
+                extraData={myData}
             />
         </View>
     );

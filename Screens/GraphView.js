@@ -4,21 +4,20 @@ import DATA, { DaysData } from './ListData';
 import { ScrollView } from 'react-native-gesture-handler';
 import MyBarList from './barList';
 import AppDataContext from '../Components/Context';
+import { Bottombar, Bottombar2 } from './Items';
 
+// const Bottombar = () => (
+//     DaysData.map((item) => {
+//         return <TouchableOpacity style={[styles.buttonView, { backgroundColor: item.disp == true ? "#dadef7" : "white" }]}>
+//             <Text style={[styles.textStyle2, { color: item.disp == true ? "#5c70e6" : "black" }]}>{item.title}</Text>
+//         </TouchableOpacity>
+//     })
+// );
 
-
-const Bottombar = () => (
-    DaysData.map((item) => {
-        return <TouchableOpacity style={[styles.buttonView, { backgroundColor: item.disp == true ? "#dadef7" : "white" }]}>
-            <Text style={[styles.textStyle2, { color: item.disp == true ? "#5c70e6" : "black" }]}>{item.title}</Text>
-        </TouchableOpacity>
-    })
-);
 
 export default function MyGraph() {
-
     const [price, setPrice] = useContext(AppDataContext);
-
+    console.log("render 1");
     return (
         <View style={styles.container}>
             <View style={styles.firstbarContainer}>
@@ -39,7 +38,11 @@ export default function MyGraph() {
                 <MyBarList />
             </View>
             <View style={styles.bottomContainer}>
-                <Bottombar />
+                {
+                    DaysData.map((item) => {
+                        return <Bottombar2 id={item.id} title={item.title} disp={item.disp} />
+                    })
+                }
             </View>
         </View>
     );
