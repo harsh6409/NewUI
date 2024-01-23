@@ -18,7 +18,7 @@ const Bottombar2 = memo((item) => {
 });
 
 const Currency = memo((title) => {
-    console.log("render Currency", title.index)
+    console.log("render Currency", title)
     return (<TouchableNativeFeedback onPress={() => title.onclick(title.index)}>
         <View style={styles.listStyle}>
             <Text style={styles.textStyle5}>{title.title}</Text>

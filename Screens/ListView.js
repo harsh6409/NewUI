@@ -12,9 +12,6 @@ export default function MyList(props) {
 
     const [_, setPrice] = useContext(AppDataContext);
 
-    console.log(props.searchkey);
-
-
     const onclick = useCallback((item) => {
         setPrice(DATA[item].price)
         var value1 = Math.round(Math.random() * 100000);
@@ -25,7 +22,7 @@ export default function MyList(props) {
     const ItemSeprator = () => (
         <View style={styles.itemSap}></View>
     );
-
+    
     const ListHeader = () => {
         return (
             <View style={styles.headerStyle}>

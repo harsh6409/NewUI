@@ -13,7 +13,7 @@ export default function MyBarList() {
                 horizontal={true}
                 data={myData}
                 showsHorizontalScrollIndicator={false}
-                renderItem={(item) => <Item2 color={item.item.color} value={item.item.value} id={item.index} />}
+                renderItem={(item) => <Item2 color={item.item.color} value={item.item.value} id={item.in} />}
                 keyExtractor={item => item.id}
             />
         </View>
